@@ -1,5 +1,6 @@
 {
   "baseURL": "https://www.telusinternational.ai/cmp",
+  "dashboardURL": "https://www.telusinternational.ai/cmp/contributor/dashboard",
   "profileURL": "https://www.telusinternational.ai/cmp/contributor/userprofile/basic-info",
   "languageURL": "https://www.telusinternational.ai/cmp/contributor/userprofile/languages"
 }

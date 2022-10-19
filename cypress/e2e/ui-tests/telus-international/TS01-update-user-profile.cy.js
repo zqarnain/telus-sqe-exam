@@ -1,4 +1,4 @@
-describe('Update User Profile', () => {
+describe('Scenario 01 - Update User Profile', () => {
     let url, credentials, userProfile
 
     beforeEach(function () {
@@ -15,29 +15,57 @@ describe('Update User Profile', () => {
         })
     })
 
-    describe('Invoke Telus-International AI URL', () => {
+    describe('TC01 - Invoke Telus-International AI URL', () => {
         it('Launch Website', function () {
             cy.visit(this.url.baseURL)
 
-            cy.wait(5000)
+            cy.wait(3000)
         })
 
-
-        it('Validate Telus logo is displayed and has correct href link', () => {
-            cy.get('a[aria-label="logo"]').should('be.visible')
-
-            cy.get('a[aria-label="logo"]').should('have.attr', 'href').and('include', '/cmp/')
+        it('Validate TELUS logo is is present in the login page and should have the correct href link', () => {
+            cy.get('a[aria-label="logo"]')
+            .should('be.visible')
+            .and('have.attr', 'href')
+            .and('include', '/cmp/')
         })
 
-        it('Validate Welcome back! text is displayed in the login page', () => {
+        it('Validate welcome back message is present in the login page', () => {
             cy.get('div[class="tw-col-start-2 tw-col-span-5 lg:tw-col-span-12 md:tw-col-span-12 sm:tw-col-span-12 xs-tw-col-span-12  tw-mt-7"]')
             .children('h1[class="sui-font-heading sui-text-dh2 sui-text-darkGray-darker tw-font-bold"]')
-            .should('have.text', 'Welcome back!')
+            .should('be.visible')
+            .and('have.text', 'Welcome back!')
+
+            cy.get('div[class="tw-col-start-2 tw-col-span-5 lg:tw-col-span-12 md:tw-col-span-12 sm:tw-col-span-12 xs-tw-col-span-12  tw-mt-7"]')
+            .children('p[class="tw-mt-5 sui-text-b3 sui-text-darkGray-darker"]')
+            .should('be.visible')
+            .and('have.text', 'Please sign in to continue.')
+        })
+
+        it('Validate forgot password? button is present in the login page', () => {
+            cy.get('button[class="sui-relative sui-rounded sui-flex sui-items-center focus:sui-outline-none sui-font-bold sui-c-btn-link sui-font-heading sui-text-h4"]')
+            .children('span[class="sui-pointer-events-none sui-relative"]')
+            .should('be.visible')
+            .and('have.text', 'Forgot password?')
+        })
+
+        it('Validate sign-up button is present in the login page and should have the correct href link', () => {
+            cy.get('div[class="tw-mt-3"]')
+            .children('div[class="tw-col-span-12"]')
+            .children('span[class="mr-3 sui-text-darkGray-darker sui-text-b4"]')
+            .should('be.visible')
+            .and('have.text', 'Don\'t have an account?')
+
+            cy.get('div[class="tw-mt-3"]')
+            .children('div[class="tw-col-span-12"]')
+            .children('a[class="sui-cursor-pointer sui-text-primary sui-font-heading sui-text-h4 sui-c-link"]')
+            .should('be.visible')
+            .and('have.text', 'Sign up')
+            .and('have.attr', 'href')
+            .and('include', '/cmp/signup')
         })
     })
 
-
-    describe('Authenticate User', () => {
+    describe('TC02 - Authenticate User', () => {
         it('Enter Username', function () {
             cy.get('input[name="email"]')
             .type(this.credentials.username)
@@ -47,6 +75,24 @@ describe('Update User Profile', () => {
         it('Click Submit Button', () => {
             cy.get('button[type=submit]')
             .click()
+
+            cy.wait(1000)
+        })
+
+        it('Validate signing as message is present in the login page', function () {
+            cy.get('div[class="tw-col-start-8 tw-col-span-4 lg:tw-col-span-12 md:tw-col-span-12 sm:tw-col-span-12 xs-tw-col-span-12 tw-mt-7"]')
+            .children('div[class="tw-col-span-12"]')
+            .children('p[class="mr-3 sui-text-darkGray-darker sui-text-b4 tw-break-words"]')
+            .should('be.visible')
+            .and('have.text', 'Signing in as ' +this.credentials.username)
+        })
+
+        it('Validate not you? button is present in the login page', () => {
+            cy.get('div[class="tw-col-span-12 tw-mt-3"]')
+            .children('button[class="sui-relative sui-rounded sui-flex sui-items-center focus:sui-outline-none sui-font-bold sui-c-btn-link sui-font-heading sui-text-h4"]')
+            .children('span[class="sui-pointer-events-none sui-relative"]')
+            .should('be.visible')
+            .and('have.text', 'Not you?')
         })
 
         it('Enter Password', function () {
@@ -58,11 +104,16 @@ describe('Update User Profile', () => {
             cy.get('button[type=submit]')
             .click()
 
-            cy.wait(5000)
+            cy.wait(3000)
         })
+
+        it('Validate sign-in was successful', function () {
+            cy.url().should('eq', this.url.dashboardURL)
+        })
+
     })
 
-    describe('Update Basic Information', () => {
+    describe('TC03 - Update Basic Information', () => {
         describe('Navigate to My Profile Page' , () => {
             it('Click Profile Icon', () => {
                 cy.get('button[class="sui-flex sui-items-center focus:sui-outline-none"]').click()
@@ -204,14 +255,14 @@ describe('Update User Profile', () => {
                     switch (cityAndState) {
                         case '':
                         case 'Mandaluyong City, National Capital Region':
-                            cy.get('input[name="cityAndState"]').type(this.userProfile.location.cityAndState1)
+                            cy.get('input[name="cityAndState"]').type(this.userProfile.location.cityAndState1, { delay: 100 })
                             break;
                         default:
-                            cy.get('input[name="cityAndState"]').type(this.userProfile.location.cityAndState2)
+                            cy.get('input[name="cityAndState"]').type(this.userProfile.location.cityAndState2, { delay: 100 })
                             break;
                     }
                     cy.wait(6000)
-                    cy.get('ul li:first').click()
+                    cy.get('ul > li:nth-child(1)').click()
                     cy.wait(3000)
                 })
             })
@@ -262,7 +313,7 @@ describe('Update User Profile', () => {
         })
     })
 
-    describe('Update Languages', () => {
+    describe('TC04 - Update Languages', () => {
         describe('Navigate to Languages Page', () => {
             it('Click Languages Left Navigation Menu', () => {
                 cy.get('a[href="/cmp/contributor/userprofile/languages"]').click()
@@ -319,7 +370,7 @@ describe('Update User Profile', () => {
         })
     })
 
-    describe('Sign-out from the Application', () => {
+    describe('TC05 - Sign-out from the Application', () => {
         it('Click Profile Icon', () => {
             cy.get('button[class="sui-flex sui-items-center focus:sui-outline-none"]').click()
         })
