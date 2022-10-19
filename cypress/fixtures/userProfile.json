@@ -1,0 +1,19 @@
+{
+  "contact": {
+    "firstName": "Zul-Qarnain",
+    "middleName": "Ayo",
+    "familyName": "Ronsing",
+    "nickName": "Zul",
+    "middleInitial": "A.",
+    "phoneNumber1": "9190627118",
+    "phoneNumber2": "9770188363"
+  },
+  "location": {
+    "street1": "8th Street",
+    "cityAndState1": "Marawi City",
+    "postalCode1": "8700",
+    "street2": "EDSA corner Madison Street",
+    "cityAndState2": "Mandaluyong City",
+    "postalCode2": "1550"
+  }
+}
