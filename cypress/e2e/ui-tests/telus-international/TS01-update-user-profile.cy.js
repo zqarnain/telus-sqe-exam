@@ -1,4 +1,4 @@
-describe('Scenario 01 - Update User Profile', () => {
+context('Scenario 01 - Update User Profile', () => {
     let url, credentials, userProfile
 
     beforeEach(function () {
@@ -72,7 +72,7 @@ describe('Scenario 01 - Update User Profile', () => {
             .should('have.value', 'zronsing@gmail.com')
         })
 
-        it('Click Submit Button', () => {
+        it('Click Continue Button', () => {
             cy.get('button[type=submit]')
             .click()
 
@@ -111,6 +111,37 @@ describe('Scenario 01 - Update User Profile', () => {
             cy.url().should('eq', this.url.dashboardURL)
         })
 
+        it('Validate navigation links are present in the dashboard page', () => {
+            cy.get('div[class="sui-text-darkGray sui--m-px sui-c-nav-items sui-absolute sui-flex-col sui-left-0 sui-w-full sui-pb-2 lg:sui-relative lg:sui-flex lg:sui-top-auto lg:sui-flex-row lg:sui-w-auto lg:sui-pb-0 lg:sui-left-auto"] > a:nth-child(1)')
+            .should('be.visible')
+            .and('have.text', 'Home')
+            .and('have.attr', 'href')
+            .and('include', '/cmp/contributor/dashboard')
+
+            cy.get('div[class="sui-text-darkGray sui--m-px sui-c-nav-items sui-absolute sui-flex-col sui-left-0 sui-w-full sui-pb-2 lg:sui-relative lg:sui-flex lg:sui-top-auto lg:sui-flex-row lg:sui-w-auto lg:sui-pb-0 lg:sui-left-auto"] > a:nth-child(2)')
+            .should('be.visible')
+            .and('have.text', 'Jobs')
+            .and('have.attr', 'href')
+            .and('include', '/cmp/contributor/jobs/')
+
+            cy.get('div[class="sui-text-darkGray sui--m-px sui-c-nav-items sui-absolute sui-flex-col sui-left-0 sui-w-full sui-pb-2 lg:sui-relative lg:sui-flex lg:sui-top-auto lg:sui-flex-row lg:sui-w-auto lg:sui-pb-0 lg:sui-left-auto"] > a:nth-child(3)')
+            .should('be.visible')
+            .and('have.text', 'Qualifications')
+            .and('have.attr', 'href')
+            .and('include', 'https://www.telusinternational.ai/home/tests')
+
+            cy.get('div[class="sui-text-darkGray sui--m-px sui-c-nav-items sui-absolute sui-flex-col sui-left-0 sui-w-full sui-pb-2 lg:sui-relative lg:sui-flex lg:sui-top-auto lg:sui-flex-row lg:sui-w-auto lg:sui-pb-0 lg:sui-left-auto"] > a:nth-child(4)')
+            .should('be.visible')
+            .and('have.text', 'Worksheets')
+            .and('have.attr', 'href')
+            .and('include', 'https://www.telusinternational.ai/walrus/worksheets')
+
+            cy.get('div[class="sui-text-darkGray sui--m-px sui-c-nav-items sui-absolute sui-flex-col sui-left-0 sui-w-full sui-pb-2 lg:sui-relative lg:sui-flex lg:sui-top-auto lg:sui-flex-row lg:sui-w-auto lg:sui-pb-0 lg:sui-left-auto"] > a:nth-child(5)')
+            .should('be.visible')
+            .and('have.text', 'Support')
+            .and('have.attr', 'href')
+            .and('include', '/cmp/contributor/support')
+        })
     })
 
     describe('TC03 - Update Basic Information', () => {
@@ -133,8 +164,6 @@ describe('Scenario 01 - Update User Profile', () => {
         })
 
         describe('Update Contact Information', () => {
-
-
             it('Click Contact Info Edit Button', () => {
                 cy.get('div[class="contact-info border-top tw-mb-6 ml-0"]')
                 .children('div[class="row figma-section-header-text-margin"]')
